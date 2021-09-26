@@ -8,7 +8,7 @@ def convert_to_features(example_batch, model_name="roberta-base", max_length=512
     features = tokenizer(
         inputs,
         max_length=max_length,
-        padding=True,
+        truncation=True,
         padding="max_length",
     )
     features["labels"] = example_batch["target"]
