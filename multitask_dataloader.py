@@ -67,7 +67,7 @@ class MultitaskDataset(datasets.GeneratorBasedBuilder):
             data = pd.read_csv(filepath, sep="\t")
         else:
             data = pd.read_csv(filepath)
-        data = data.head(20)
+        data = data
         for idx, row in data.iterrows():
             yield row["id"], {
                 "doc": row["doc"],
