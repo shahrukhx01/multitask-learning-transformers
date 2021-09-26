@@ -18,6 +18,8 @@ from preprocess import convert_to_features
 from multitask_data_collator import MultitaskTrainer, NLPDataCollator
 from multitask_eval import multitask_eval_fn
 from checkpoint_model import save_model
+from pathlib import Path
+
 
 logger = logging.getLogger(__name__)
 
@@ -65,37 +67,44 @@ def main():
         print(dataset_dict[task_name]["train"][0])
         print()
 
-    model_name = "roberta-base"
+    model_names = ["roberta-base"] * 2
+    config_files = model_names
+    for idx, task_name in enumerate(["quora_keyword_pairs", "spaadia_squad_pairs"]):
+        model_file = Path(f"./{task_name}_model/pytorch_model.bin")
+        config_file = Path(f"./{task_name}_model/config.json")
+        if model_file.is_file():
+            model_names[idx] = f"./{task_name}_model"
+
+        if config_file.is_file():
+            config_files[idx] = f"./{task_name}_model"
 
     multitask_model = MultitaskModel.create(
-        model_name=model_name,
+        model_name=model_names[0],
         model_type_dict={
             "quora_keyword_pairs": transformers.AutoModelForSequenceClassification,
             "spaadia_squad_pairs": transformers.AutoModelForSequenceClassification,
         },
         model_config_dict={
             "quora_keyword_pairs": transformers.AutoConfig.from_pretrained(
-                "./quora_keyword_pairs_model", num_labels=2
+                model_names[0], num_labels=2
             ),
             "spaadia_squad_pairs": transformers.AutoConfig.from_pretrained(
-                "./spaadia_squad_pairs_model", num_labels=2
+                model_names[1], num_labels=2
             ),
         },
     )
-    if model_name.startswith("roberta-"):
-        print(multitask_model.encoder.embeddings.word_embeddings.weight.data_ptr())
-        print(
-            multitask_model.taskmodels_dict[
-                "quora_keyword_pairs"
-            ].roberta.embeddings.word_embeddings.weight.data_ptr()
-        )
-        print(
-            multitask_model.taskmodels_dict[
-                "spaadia_squad_pairs"
-            ].roberta.embeddings.word_embeddings.weight.data_ptr()
-        )
-    else:
-        print("Exercise for the reader: add a check for other model architectures =)")
+
+    print(multitask_model.encoder.embeddings.word_embeddings.weight.data_ptr())
+    print(
+        multitask_model.taskmodels_dict[
+            "quora_keyword_pairs"
+        ].roberta.embeddings.word_embeddings.weight.data_ptr()
+    )
+    print(
+        multitask_model.taskmodels_dict[
+            "spaadia_squad_pairs"
+        ].roberta.embeddings.word_embeddings.weight.data_ptr()
+    )
 
     convert_func_dict = {
         "quora_keyword_pairs": convert_to_features,
@@ -155,10 +164,10 @@ def main():
     trainer.train()
 
     ## evaluate on given tasks
-    multitask_eval_fn(multitask_model, model_name, dataset_dict)
+    multitask_eval_fn(multitask_model, "roberta-base", dataset_dict)
 
     ## save model for later use
-    save_model(model_name, multitask_model)
+    save_model("roberta-base", multitask_model)
 
 
 if __name__ == "__main__":
