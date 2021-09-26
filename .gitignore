@@ -135,3 +135,5 @@ dmypy.json
 *.bin
 *.json
 merges.txt
+output/*
+mlruns/*
