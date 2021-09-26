@@ -134,3 +134,4 @@ dmypy.json
 # PyTorch model files
 *.bin
 *.json
+merges.txt

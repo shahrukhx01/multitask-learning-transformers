@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/shahrukh/Desktop/multitask-learning-transformers/mlruns/0/14d225d29364438e9e053d7f9178a636/artifacts
+end_time: 1632674701557
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 14d225d29364438e9e053d7f9178a636
+run_uuid: 14d225d29364438e9e053d7f9178a636
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1632674668462
+status: 3
+tags: []
+user_id: shahrukh

@@ -67,7 +67,7 @@ def main():
         print(dataset_dict[task_name]["train"][0])
         print()
 
-    model_names = ["roberta-base"] * 2
+    model_names = [args.model_name_or_path] * 2
     config_files = model_names
     for idx, task_name in enumerate(["quora_keyword_pairs", "spaadia_squad_pairs"]):
         model_file = Path(f"./{task_name}_model/pytorch_model.bin")
@@ -149,13 +149,13 @@ def main():
     trainer = MultitaskTrainer(
         model=multitask_model,
         args=transformers.TrainingArguments(
-            output_dir="./models/multitask_model",
+            output_dir=args.output_dir,
             overwrite_output_dir=True,
             learning_rate=1e-5,
             do_train=True,
-            num_train_epochs=1,
+            num_train_epochs=args.num_train_epochs,
             # Adjust batch size if this doesn't fit on the Colab GPU
-            per_device_train_batch_size=8,
+            per_device_train_batch_size=args.per_device_train_batch_size,
             save_steps=3000,
         ),
         data_collator=NLPDataCollator(),
