@@ -17,6 +17,7 @@ from multitask_model import MultitaskModel
 from preprocess import convert_to_features
 from multitask_data_collator import MultitaskTrainer, NLPDataCollator
 from multitask_eval import multitask_eval_fn
+from checkpoint_model import save_model
 
 logger = logging.getLogger(__name__)
 
@@ -65,6 +66,7 @@ def main():
         print()
 
     model_name = "roberta-base"
+
     multitask_model = MultitaskModel.create(
         model_name=model_name,
         model_type_dict={
@@ -73,10 +75,10 @@ def main():
         },
         model_config_dict={
             "quora_keyword_pairs": transformers.AutoConfig.from_pretrained(
-                model_name, num_labels=2
+                "./quora_keyword_pairs_model", num_labels=2
             ),
             "spaadia_squad_pairs": transformers.AutoConfig.from_pretrained(
-                model_name, num_labels=2
+                "./spaadia_squad_pairs_model", num_labels=2
             ),
         },
     )
@@ -151,8 +153,12 @@ def main():
         train_dataset=train_dataset,
     )
     trainer.train()
-    ## evaluate dataset
+
+    ## evaluate on given tasks
     multitask_eval_fn(multitask_model, model_name, dataset_dict)
+
+    ## save model for later use
+    save_model(model_name, multitask_model)
 
 
 if __name__ == "__main__":

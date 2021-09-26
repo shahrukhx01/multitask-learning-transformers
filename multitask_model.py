@@ -27,7 +27,7 @@ class MultitaskModel(transformers.PreTrainedModel):
         taskmodels_dict = {}
         for task_name, model_type in model_type_dict.items():
             model = model_type.from_pretrained(
-                model_name,
+                f"./{task_name}_model",
                 config=model_config_dict[task_name],
             )
             if shared_encoder is None:
