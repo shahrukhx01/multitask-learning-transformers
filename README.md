@@ -4,6 +4,8 @@ You can find two approaches for achieving this in this repo.
 
 * Single Encoder Multiple Output Heads
 A multi-task model in the age of BERT works by having a shared BERT-style encoder transformer, and different task heads for each task.
+
+
 ![mt1](https://user-images.githubusercontent.com/6007894/134903082-64247dd0-fc6f-4b85-a936-b9607ade5a14.png)
 
 * Shared Encoder
