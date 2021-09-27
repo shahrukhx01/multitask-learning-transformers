@@ -12,16 +12,10 @@ import transformers
 from transformers import BertTokenizer
 from transformers import models
 from transformers.modeling_outputs import SequenceClassifierOutput
-from transformers.modeling_utils import (
-    PreTrainedModel,
-    apply_chunking_to_forward,
-    find_pruneable_heads_and_indices,
-    prune_linear_layer,
-)
+
 from transformers.models.bert.configuration_bert import BertConfig
 from transformers.models.bert.modeling_bert import (
     BertPreTrainedModel,
-    load_tf_weights_in_bert,
     BERT_INPUTS_DOCSTRING,
     _TOKENIZER_FOR_DOC,
     _CHECKPOINT_FOR_DOC,
@@ -30,13 +24,9 @@ from transformers.models.bert.modeling_bert import (
 )
 
 from transformers.file_utils import (
-    ModelOutput,
     add_code_sample_docstrings,
-    add_start_docstrings,
     add_start_docstrings_to_model_forward,
-    replace_return_docstrings,
 )
-from transformers.utils import logging
 
 
 class BertForSequenceClassification(BertPreTrainedModel):
