@@ -1,3 +1,7 @@
+"""
+Implementation borrowed from transformers package and extended to support multiple prediction heads
+"""
+
 import torch
 from torch import nn
 from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss, MSELoss
