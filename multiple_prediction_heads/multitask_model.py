@@ -1,5 +1,7 @@
 """
-Implementation borrowed from transformers package and extended to support multiple prediction heads
+Implementation borrowed from transformers package and extended to support multiple prediction heads:
+
+https://github.com/huggingface/transformers/blob/master/src/transformers/models/bert/modeling_bert.py
 """
 
 import torch
