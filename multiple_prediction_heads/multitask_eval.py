@@ -11,18 +11,13 @@ def multitask_eval_fn(multitask_model, model_name, features_dict, batch_size=8):
     for task_name in ["quora_keyword_pairs", "spaadia_squad_pairs"]:
         val_len = len(features_dict[task_name]["validation"])
         acc = 0.0
-        for index in range(0, val_len, batch_size):
+        for index in range(0, val_len):
 
-            batch = features_dict[task_name]["validation"][
-                index : min(index + batch_size, val_len)
-            ]["doc"]
-            labels = features_dict[task_name]["validation"][
-                index : min(index + batch_size, val_len)
-            ]["target"]
-            inputs = tokenizer(batch, max_length=512, padding=True)
-            inputs["input_ids"] = torch.LongTensor(inputs["input_ids"])
-            inputs["attention_mask"] = torch.LongTensor(inputs["attention_mask"])
-            logits = multitask_model("quora_keyword_pairs", **inputs)[0]
+            batch = features_dict[task_name]["validation"][index]["doc"]
+            labels = features_dict[task_name]["validation"][index]["target"]
+            inputs = tokenizer(batch, return_tensors="pt")["input_ids"]
+
+            logits = multitask_model(inputs, task_name="quora_keyword_pairs")[0]
 
             predictions = torch.argmax(
                 torch.FloatTensor(torch.softmax(logits, dim=1).detach().cpu().tolist()),

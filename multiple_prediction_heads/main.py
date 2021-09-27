@@ -13,7 +13,7 @@ from filelock import FileLock
 from transformers import set_seed
 from transformers.file_utils import is_offline_mode
 from utils.arguments import parse_args
-from multitask_model import MultitaskModel
+from multitask_model import BertForSequenceClassification
 from preprocess import convert_to_features
 from multitask_data_collator import MultitaskTrainer, NLPDataCollator
 from multitask_eval import multitask_eval_fn
@@ -78,33 +78,12 @@ def main():
         if config_file.is_file():
             config_files[idx] = f"./{task_name}_model"
 
-    multitask_model = MultitaskModel.create(
-        model_name=model_names[0],
-        model_type_dict={
-            "quora_keyword_pairs": transformers.AutoModelForSequenceClassification,
-            "spaadia_squad_pairs": transformers.AutoModelForSequenceClassification,
-        },
-        model_config_dict={
-            "quora_keyword_pairs": transformers.AutoConfig.from_pretrained(
-                model_names[0], num_labels=2
-            ),
-            "spaadia_squad_pairs": transformers.AutoConfig.from_pretrained(
-                model_names[1], num_labels=2
-            ),
-        },
+    multitask_model = BertForSequenceClassification.from_pretrained(
+        "prajjwal1/bert-mini",
+        task_labels_map={"quora_keyword_pairs": 2, "spaadia_squad_pairs": 2},
     )
 
-    print(multitask_model.encoder.embeddings.word_embeddings.weight.data_ptr())
-    print(
-        multitask_model.taskmodels_dict[
-            "quora_keyword_pairs"
-        ].roberta.embeddings.word_embeddings.weight.data_ptr()
-    )
-    print(
-        multitask_model.taskmodels_dict[
-            "spaadia_squad_pairs"
-        ].roberta.embeddings.word_embeddings.weight.data_ptr()
-    )
+    print(multitask_model.bert.embeddings.word_embeddings.weight.data_ptr())
 
     convert_func_dict = {
         "quora_keyword_pairs": convert_to_features,
@@ -164,10 +143,10 @@ def main():
     trainer.train()
 
     ## evaluate on given tasks
-    multitask_eval_fn(multitask_model, "roberta-base", dataset_dict)
+    multitask_eval_fn(multitask_model, args.model_name_or_path, dataset_dict)
 
     ## save model for later use
-    save_model("roberta-base", multitask_model)
+    save_model(args.model_name_or_path, multitask_model)
 
 
 if __name__ == "__main__":

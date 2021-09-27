@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/shahrukh/Desktop/multitask-learning-transformers/multiple_prediction_heads/mlruns/0/4deabb8adca44bf29e8309f46025a082/artifacts
+end_time: 1632742204496
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 4deabb8adca44bf29e8309f46025a082
+run_uuid: 4deabb8adca44bf29e8309f46025a082
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1632742196186
+status: 3
+tags: []
+user_id: shahrukh

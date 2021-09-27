@@ -1,7 +1,5 @@
 import json
 import datasets
-from random import randint
-from nlp import DatasetInfo, BuilderConfig, SplitGenerator, Split, utils
 import pandas as pd
 
 
@@ -67,7 +65,7 @@ class MultitaskDataset(datasets.GeneratorBasedBuilder):
             data = pd.read_csv(filepath, sep="\t")
         else:
             data = pd.read_csv(filepath)
-        data = data
+        data = data.head()
         for idx, row in data.iterrows():
             yield row["id"], {
                 "doc": row["doc"],
