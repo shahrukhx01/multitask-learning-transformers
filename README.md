@@ -2,15 +2,18 @@
 A simple recipe for training and inferencing Transformer architecture on custom datasets.
 You can find two approaches for achieving this in this repo.
 
-* Single Encoder Multiple Output Heads
+## Single Encoder Multiple Output Heads
 A multi-task model in the age of BERT works by having a shared BERT-style encoder transformer, and different task heads for each task.
 
 
 ![mt1](https://user-images.githubusercontent.com/6007894/134903082-64247dd0-fc6f-4b85-a936-b9607ade5a14.png)
 
-* Shared Encoder
-![mt2](https://user-images.githubusercontent.com/6007894/134903512-ce42e2d0-b5b1-4269-97de-7255d0cf5a52.png)
+## Shared Encoder
 Separate models for each task, but we make them share the same encoder. 
+
+![mt2](https://user-images.githubusercontent.com/6007894/134903512-ce42e2d0-b5b1-4269-97de-7255d0cf5a52.png)
+
+
  
 
 ```python
