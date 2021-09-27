@@ -1,6 +1,5 @@
 # multitask-learning-transformers
-A simple recipe for training and inferencing Transformer architecture on custom datasets.
-You can find two approaches for achieving this in this repo.
+A simple recipe for training and inferencing Transformer architecture for Multi-Task Learning on custom datasets. You can find two approaches for achieving this in this repo.
 
 ### Colab Notebook
 [Colab Notebook](https://colab.research.google.com/drive/1R7WcLHxDsVvZXPhr5HBgIWa3BlSZKY6p?usp=sharing#scrollTo=3Fzv6lYA0wFw)
