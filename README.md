@@ -2,6 +2,12 @@
 A simple recipe for training and inferencing Transformer architecture on custom datasets.
 You can find two approaches for achieving this in this repo.
 
+### Colab Notebook
+[Colab Notebook](https://colab.research.google.com/drive/1R7WcLHxDsVvZXPhr5HBgIWa3BlSZKY6p?usp=sharing#scrollTo=3Fzv6lYA0wFw)
+
+### Trained Huggingface Model
+[HF Model](https://huggingface.co/shahrukhx01/bert-multitask-query-classifiers)
+
 ### Install depedencies
 ```bash
 pip install -r requirements.txt
